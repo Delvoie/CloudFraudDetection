@@ -119,7 +119,3 @@ CloudFraudDetection/
 - Use Python 3.11 runtime (Node.js 18.x not available)
 - All environment variables must use correct ARNs/URLs
 - SQS requires **Queue URL** (not ARN) for send_message operations
-
-## License
-
-Educational project for AWS Academy coursework.
