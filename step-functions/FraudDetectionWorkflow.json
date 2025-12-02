@@ -1,0 +1,38 @@
+{
+  "Comment": "Fraud Detection Workflow - Evaluates transactions and routes based on fraud detection",
+  "StartAt": "EvaluateTransaction",
+  "States": {
+    "EvaluateTransaction": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:EvaluateTransaction",
+      "ResultPath": "$.evaluation",
+      "Next": "FraudCheck",
+      "Comment": "Analyzes transaction to determine if fraudulent (amount > 10000)"
+    },
+    "FraudCheck": {
+      "Type": "Choice",
+      "Comment": "Route based on fraud evaluation result",
+      "Choices": [
+        {
+          "Variable": "$.evaluation.isFraud",
+          "BooleanEquals": true,
+          "Next": "SendAlert",
+          "Comment": "If fraud detected, send alert"
+        }
+      ],
+      "Default": "Clean"
+    },
+    "SendAlert": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:SendAlert",
+      "Comment": "Publish fraud alert to SNS topic",
+      "End": true
+    },
+    "Clean": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:REGION:ACCOUNT_ID:function:SendToCleanQueue",
+      "Comment": "Send clean transaction to storage queue",
+      "End": true
+    }
+  }
+}

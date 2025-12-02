@@ -1,0 +1,15 @@
+{
+  "TopicName": "FraudAlertsTopic",
+  "Description": "Sends email notifications for detected fraudulent transactions",
+  "DisplayName": "Fraud Detection Alerts",
+  "Tags": [
+    {
+      "Key": "Project",
+      "Value": "CloudFraudDetection"
+    },
+    {
+      "Key": "Purpose",
+      "Value": "Fraud Alert Notifications"
+    }
+  ]
+}
